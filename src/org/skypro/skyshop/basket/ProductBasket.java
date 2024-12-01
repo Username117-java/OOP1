@@ -19,35 +19,37 @@ public class ProductBasket {
         }
     }
 
-
-    public int getTotalCost() {
-        int totalCost = 0;
-        if (productBasket[0] == null) {
-            System.out.println("В корзине пусто");
-            return totalCost;
-        }
+    public int getTotalPrice() {
+        int totalPrice = 0;
         for (Product product : productBasket) {
             if (product != null) {
-                totalCost += product.getCostProduct();
+                totalPrice += product.getPriceProduct();
             }
         }
-        return totalCost;
+        return totalPrice;
     }
 
     public void printProductBasket() {
+        if (productBasket[0] == null) {
+            System.out.println("В корзине пусто");
+            return;
+        }
+        int specialProducts = 0;
         for (Product product : productBasket) {
             if (product != null) {
-                System.out.println(product.toString());
+                if (product.isSpecial()) {
+                    specialProducts++;
+                }
+                System.out.println(product);
             }
 
         }
-        System.out.println("Итого: " + getTotalCost());
-
+        System.out.println("Итого: " + getTotalPrice());
+        System.out.println("Специальных товаров: " + specialProducts);
     }
 
     public boolean findProduct(String product) {
         if (productBasket[0] == null) {
-            System.out.println("В корзине пусто");
             return false;
         }
         for (int i = 0; i < productBasket.length; i++) {
