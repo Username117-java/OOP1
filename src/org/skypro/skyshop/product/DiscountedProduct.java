@@ -4,7 +4,6 @@ public class DiscountedProduct extends Product {
     private int basePrise;
     private int discount;
 
-
     public DiscountedProduct(String name, int basePrise, int discount) {
         super(name);
         if (basePrise < 0) {
