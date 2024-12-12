@@ -21,10 +21,6 @@ public class SimpleProduct extends Product {
         return getNameProduct() + ": " + getPriceProduct();
     }
 
-    @Override
-    public boolean isSpecial() {
-        return false;
-    }
 
 }
 
