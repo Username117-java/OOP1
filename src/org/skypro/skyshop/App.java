@@ -28,19 +28,19 @@ public class App {
         try {
             Product redPants = new DiscountedProduct("Малиновые штаны", 1000, 146);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.toString());
         }
 
         try {
             Product gravicapa = new SimpleProduct("Гравицапа", -666);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.toString());
         }
 
         try {
             Product nothing = new FixPriceProduct("   ");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.toString());
         }
 
 
@@ -56,13 +56,13 @@ public class App {
         try {
             System.out.println(searchEngine.search("палк").toString());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.toString());
         }
 
         try {
             System.out.println(searchEngine.search("Что находится за ледяной стеной вокруг плоской земли?").toString());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.toString());
         }
 
     }
