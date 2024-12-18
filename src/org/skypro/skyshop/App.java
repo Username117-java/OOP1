@@ -21,10 +21,10 @@ public class App {
         Product lime = new FixPriceProduct("Лайм");
         Product woodenNails = new FixPriceProduct("Деревянные гвозди");
         Product blackCaviar = new SimpleProduct("Черная икра", 6500);
-        Article nailsArticle = new Article("О пользе деревяных гвоздей",
+        Searchable nailsArticle = new Article("О пользе деревяных гвоздей",
                 "Основная польза применения деревяных гвоздей в уменьшении массы изготавливаемого изделия. " +
                         "Если изделия окажется недостаточно долговечным, инженеров можно избить палкой...");
-        Article stickWorkManual = new Article("Инструкция к палке для битья крапивы",
+        Searchable stickWorkManual = new Article("Инструкция к палке для битья крапивы",
                 "Ниже будут описаны все варианты применения палки для битья крапивы, а также подробная техника безопасности при эксплуатации: ...");
 
 
