@@ -1,22 +1,23 @@
 package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.search.Searchable;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ProductBasket {
 
-    private Product[] productBasket = new Product[5];
+    private List<Product> productBasket = new LinkedList<>();
 
-    public void addProduct(Product product) {
-        if (productBasket[4] != null) {
-            System.out.println("Невозможно добавить продукт " + product.getNameProduct());
-            return;
-        }
-        for (int i = 0; i < productBasket.length; i++) {
-            if (productBasket[i] == null) {
-                productBasket[i] = product;
-                break;
-            }
-        }
+    public ProductBasket(){
+        List<Product> productBasket = new LinkedList<>();
+    }
+
+    public void addProduct(Product product) {        
+        productBasket.add(product);
     }
 
     public int getTotalPrice() {
@@ -30,7 +31,7 @@ public class ProductBasket {
     }
 
     public void printProductBasket() {
-        if (productBasket[0] == null) {
+        if (productBasket.get(0) == null) {
             System.out.println("В корзине пусто");
             return;
         }
@@ -49,11 +50,11 @@ public class ProductBasket {
     }
 
     public boolean findProduct(String product) {
-        if (productBasket[0] == null) {
+        if (productBasket.get(0) == null) {
             return false;
         }
-        for (int i = 0; i < productBasket.length; i++) {
-            if (productBasket[i].getNameProduct().equals(product)) {
+        for (int i = 0; i < productBasket.size(); i++) {
+            if (productBasket.get(i).getNameProduct().equals(product)) {
                 return true;
             }
 
@@ -62,10 +63,23 @@ public class ProductBasket {
     }
 
     public void cleanBasket() {
-        for (int i = 0; i < productBasket.length; i++) {
-            productBasket[i] = null; // очистка массива?
-        }
+        productBasket.clear();
+    }
 
+    public List<Product> deleteProduct(String name) {
+        List<Product> deleted = new ArrayList<>();
+        Iterator<Product> iterator = productBasket.iterator();
+        while (iterator.hasNext()) {
+            Product p = iterator.next();
+            if (p.getNameProduct().equals(name)) {
+                deleted.add(p);
+                iterator.remove();
+            }
+        }
+        if (deleted.isEmpty()){
+            System.out.println("Список пуст");
+        }
+        return deleted;
     }
 
 }

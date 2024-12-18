@@ -2,14 +2,31 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.errors.BestResultNotFound;
 
-public class SearchEngine {
-    private Searchable[] searchableMassive;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-    public SearchEngine(int massiveSize) {
-        searchableMassive = new Searchable[massiveSize];
+public class SearchEngine {
+
+    private List<Searchable> searchableMassive = new LinkedList<>();
+
+
+    public List<Searchable> search(String searchContent) {
+        List<Searchable> searchResult = new LinkedList<>();
+        Iterator<Searchable> iterator = searchableMassive.iterator();
+        while (iterator.hasNext()) {
+            Searchable s = iterator.next();
+            if (s.searchTerm().contains(searchContent)) {
+                searchResult.add(s);
+            }
+        }
+        if (searchResult.isEmpty()) {
+            throw new BestResultNotFound(searchContent);
+        }
+        return searchResult;
     }
 
-    public Searchable search(String searchContent) {
+    public Searchable searchBestResult(String searchContent) {
         Searchable searchResult = null;
         int maxCount = 0;
         for (Searchable s : searchableMassive) {
@@ -31,32 +48,10 @@ public class SearchEngine {
         return searchResult;
     }
 
-//    public Searchable[] search(String searchContent) {
-//        Searchable[] searchResult = new Searchable[5];
-//        int i = 0;
-//        for (Searchable s : searchableMassive) {
-//            if (s.searchTerm().contains(searchContent)) {
-//                searchResult[i] = s;
-//                i++;
-//                if (i == 5) {
-//                    return searchResult;
-//                }
-//            }
-//        }
-//        return searchResult;
-//    }
+
 
     public void add(Searchable searchable) {
-        if (searchableMassive[searchableMassive.length - 1] != null) {
-            System.out.println("Массив поиска заполнен");
-            return;
-        }
-        for (int i = 0; i < searchableMassive.length; i++) {
-            if (searchableMassive[i] == null) {
-                searchableMassive[i] = searchable;
-                break;
-            }
-        }
+        searchableMassive.add(searchable);
     }
 
 }
