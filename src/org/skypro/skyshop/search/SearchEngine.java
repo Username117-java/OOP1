@@ -7,6 +7,7 @@ import java.util.*;
 
 public class SearchEngine {
 
+
     private Map<String, List<Searchable>> searchableMassive = new TreeMap<>();
 
     public TreeMap<String, List<Searchable>> search(String searchContent) {
