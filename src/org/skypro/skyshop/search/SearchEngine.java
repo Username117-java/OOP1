@@ -1,57 +1,33 @@
 package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.errors.BestResultNotFound;
+import org.skypro.skyshop.product.Product;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class SearchEngine {
 
-    private List<Searchable> searchableMassive = new LinkedList<>();
+    private Map<String, List<Searchable>> searchableMassive = new TreeMap<>();
 
+    public TreeMap<String, List<Searchable>> search(String searchContent) {
+        TreeMap<String, List<Searchable>> searchResult = new TreeMap<>();
 
-    public List<Searchable> search(String searchContent) {
-        List<Searchable> searchResult = new LinkedList<>();
-        Iterator<Searchable> iterator = searchableMassive.iterator();
-        while (iterator.hasNext()) {
-            Searchable s = iterator.next();
-            if (s.searchTerm().contains(searchContent)) {
-                searchResult.add(s);
+        for (Map.Entry<String, List<Searchable>> entry : searchableMassive.entrySet()) {
+            for (Searchable s : entry.getValue()) {
+                if (s.searchTerm().contains(searchContent)) {
+                    searchResult.computeIfAbsent(s.getName(), k -> new LinkedList<>()).add(s);
+                }
             }
         }
+
         if (searchResult.isEmpty()) {
             throw new BestResultNotFound(searchContent);
         }
         return searchResult;
     }
 
-    public Searchable searchBestResult(String searchContent) {
-        Searchable searchResult = null;
-        int maxCount = 0;
-        for (Searchable s : searchableMassive) {
-            int index = 0;
-            int count = 0;
-            int subIndex = s.searchTerm().indexOf(searchContent, index);
-            while (subIndex != -1) {
-                count++;
-                index += searchContent.length();
-                subIndex = s.searchTerm().indexOf(searchContent, index);
-            }
-            if (count > maxCount) {
-                searchResult = s;
-            }
-        }
-        if (searchResult == null) {
-            throw new BestResultNotFound(searchContent);
-        }
-        return searchResult;
-    }
-
-
-
     public void add(Searchable searchable) {
-        searchableMassive.add(searchable);
+        searchableMassive.computeIfAbsent(searchable.getName(), k -> new LinkedList<>()).add(searchable);
     }
 
 }
