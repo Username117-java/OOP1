@@ -10,16 +10,10 @@ public class ProductBasket {
     private Map<String, List<Product>> productBasket = new TreeMap<>();
 
     public ProductBasket() {
-        Map<String, List<Product>> productBasket = new TreeMap<>();
+        this.productBasket = new TreeMap<>();
     }
 
     public void addProduct(Product product) {
-        // Честно скажу, загуглил и не особо понимаю, что тут происходит.
-        // Пытался добавлять сам, но у меня либо не компилируется, либо заменяется значение и при двух одинаковых
-        // товарах, добавляется только один.
-        // Как правильно сделать? У меня только один вариант сейчас в голове, это создавать временный лист,
-        // запихивать в него величину по нужному ключу, добавлять к нему еще один такой же товар, а потом
-        // этим листом заменять существующий, но это как-то громоздко, мне кажется должны быть способы легче.
         productBasket.computeIfAbsent(product.getName(), k -> new LinkedList<>()).add(product);
     }
 
