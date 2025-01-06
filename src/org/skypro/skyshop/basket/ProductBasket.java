@@ -6,10 +6,9 @@ import java.util.*;
 
 public class ProductBasket {
 
+    private Map<String, List<Product>> productBasket;
 
-    private Map<String, List<Product>> productBasket = new TreeMap<>();
-
-    public ProductBasket() {
+    public ProductBasket(){
         this.productBasket = new TreeMap<>();
     }
 
@@ -67,13 +66,13 @@ public class ProductBasket {
 
     public List<List<Product>> deleteProduct(String name) {
         List<List<Product>> deleted = new ArrayList<>();
-        if (productBasket.containsKey(name)) {
+        if (productBasket.containsKey(name)){
             deleted.add(productBasket.get(name));
             productBasket.remove(name);
 
         }
 
-        if (deleted.isEmpty()) {
+        if (deleted.isEmpty()){
             System.out.println("Продуктов для удаления не нашлось");
         }
         return deleted;
