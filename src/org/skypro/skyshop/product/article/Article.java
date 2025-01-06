@@ -3,6 +3,7 @@ package org.skypro.skyshop.product.article;
 import org.skypro.skyshop.search.Searchable;
 
 public class Article implements Searchable {
+
     private String nameArticle;
     private String textArticle;
 
@@ -26,4 +27,10 @@ public class Article implements Searchable {
     public String getTypeContent() {
         return "ARTICLE";
     }
+
+    @Override
+    public String getName() {
+        return nameArticle;
+    }
+
 }

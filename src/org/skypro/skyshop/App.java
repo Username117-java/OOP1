@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class App {
+
     public static void main(String[] args) {
         Product tequila = new SimpleProduct("Текила", 1500);
         Product salt = new SimpleProduct("Соль", 20);
