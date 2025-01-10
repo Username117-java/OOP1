@@ -7,19 +7,17 @@ import java.util.*;
 
 public class SearchEngine {
 
+    private Set<Searchable> searchableMassive = new HashSet<>();
 
-    private Map<String, List<Searchable>> searchableMassive = new TreeMap<>();
+    public TreeSet<Searchable> search(String searchContent) {
+        TreeSet<Searchable> searchResult = new TreeSet<>(new LengthComparator());
 
-    public TreeMap<String, List<Searchable>> search(String searchContent) {
-        TreeMap<String, List<Searchable>> searchResult = new TreeMap<>();
-
-        for (Map.Entry<String, List<Searchable>> entry : searchableMassive.entrySet()) {
-            for (Searchable s : entry.getValue()) {
-                if (s.searchTerm().contains(searchContent)) {
-                    searchResult.computeIfAbsent(s.getName(), k -> new LinkedList<>()).add(s);
-                }
+        for (Searchable s : searchableMassive) {
+            if (s.searchTerm().contains(searchContent)) {
+                searchResult.add(s);
             }
         }
+
 
         if (searchResult.isEmpty()) {
             throw new BestResultNotFound(searchContent);
@@ -27,8 +25,9 @@ public class SearchEngine {
         return searchResult;
     }
 
+    // А оно вообще нужно?
     public void add(Searchable searchable) {
-        searchableMassive.computeIfAbsent(searchable.getName(), k -> new LinkedList<>()).add(searchable);
+        searchableMassive.add(searchable);
     }
 
 }
