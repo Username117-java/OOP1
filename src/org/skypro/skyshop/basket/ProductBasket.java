@@ -3,12 +3,14 @@ package org.skypro.skyshop.basket;
 import org.skypro.skyshop.product.Product;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ProductBasket {
 
     private Map<String, List<Product>> productBasket;
 
-    public ProductBasket(){
+    public ProductBasket() {
         this.productBasket = new TreeMap<>();
     }
 
@@ -17,13 +19,9 @@ public class ProductBasket {
     }
 
     public int getTotalPrice() {
-        int totalPrice = 0;
-        for (Map.Entry<String, List<Product>> entry : productBasket.entrySet()) {
-            for (Product product : entry.getValue()) {
-                totalPrice += product.getPriceProduct();
-            }
-        }
-        return totalPrice;
+        return productBasket.values().stream().flatMap(Collection::stream)
+                .flatMapToInt(x -> IntStream.of(x.getPriceProduct()))
+                .sum();
     }
 
     public void printProductBasket() {
@@ -31,33 +29,20 @@ public class ProductBasket {
             System.out.println("В корзине пусто");
             return;
         }
-        int specialProducts = 0;
-        for (Map.Entry<String, List<Product>> entry : productBasket.entrySet()) {
-            for (Product product : entry.getValue()) {
-                if (product.isSpecial()) {
-                    specialProducts++;
-                }
-                System.out.println(product);
-            }
-        }
+        productBasket.values().stream().flatMap(Collection::stream).forEach(System.out::println);
+
         System.out.println("Итого: " + getTotalPrice());
-        System.out.println("Специальных товаров: " + specialProducts);
+        System.out.println("Специальных товаров: " + getSpecialCount());
+    }
+
+    private long getSpecialCount() {
+        return productBasket.values().stream().flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public boolean findProduct(String product) {
-        if (productBasket.isEmpty()) {
-            return false;
-        }
-
-        for (Map.Entry<String, List<Product>> entry : productBasket.entrySet()) {
-            for (Product p : entry.getValue()) {
-                if (p.getName().equals(product)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return productBasket.values().stream().flatMap(Collection::stream).anyMatch(x -> x.getName().equals(product));
     }
 
     public void cleanBasket() {
@@ -66,13 +51,13 @@ public class ProductBasket {
 
     public List<List<Product>> deleteProduct(String name) {
         List<List<Product>> deleted = new ArrayList<>();
-        if (productBasket.containsKey(name)){
+        if (productBasket.containsKey(name)) {
             deleted.add(productBasket.get(name));
             productBasket.remove(name);
 
         }
 
-        if (deleted.isEmpty()){
+        if (deleted.isEmpty()) {
             System.out.println("Продуктов для удаления не нашлось");
         }
         return deleted;
