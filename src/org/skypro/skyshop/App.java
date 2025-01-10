@@ -31,6 +31,16 @@ public class App {
         Product test3 = new FixPriceProduct("А аа");
         Product test4 = new FixPriceProduct("АА аа");
 
+        ProductBasket productBasket = new ProductBasket();
+        productBasket.addProduct(tequila);
+        productBasket.addProduct(tequila);
+        productBasket.addProduct(salt);
+        productBasket.addProduct(woodenNails);
+        System.out.println(productBasket.getTotalPrice());
+        productBasket.printProductBasket();
+        System.out.println(productBasket.findProduct("Текила"));
+        System.out.println(productBasket.findProduct("Что-то"));
+
 
         SearchEngine searchEngine = new SearchEngine();
         searchEngine.add(tequila);
